@@ -20,3 +20,6 @@ def test_day_one(obj):
 def test_day_two(obj):
     assert obj.day_two([1, 2, 3, 4, 5]) == [120, 60, 40, 30, 24]
     assert obj.day_two([4, 1, 6, 3, 2]) == [36, 144, 24, 48, 72]
+
+def test_day_three(obj):
+    assert obj.day_three() == 'test'
