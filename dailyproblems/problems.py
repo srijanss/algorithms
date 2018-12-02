@@ -15,10 +15,18 @@ class Node(object):
             nextval = nextval.nextval
 
 class BinaryTreeNode(object):
+    __node_index = 0
+
     def __init__(self, val, left=None, right=None):
         self.val = val
         self.left = left
         self.right = right
+
+    def get_node_index(self):
+        return self.__node_index
+
+    def set_node_index(self):
+        self.__node_index += 1
 
 def count_nodes(node):
     if node is None:
@@ -47,53 +55,66 @@ def deserialize(nodestr):
     # elif '-' in nodestr:
     #     node = None
     # else:
-    #     node = nodestr.split(',')[0] 
+    #     node = nodestr.split(',')[0]
     """
     nodestr = nodestr.split(',')
-    if 'Node' in nodestr[0]:
-        node = BinaryTreeNode(nodestr[0].split('(')[1])
-        if 'Node' in  nodestr[1]:
-            node.left = BinaryTreeNode(nodestr[1].split('(')[1])
-            if 'Node' in nodestr[2]:
-                node.left.left = BinaryTreeNode(nodestr[2].split('(')[1])
-            elif '-' in nodestr[2]:
-                node.left.left = None
-            else:
-                node.left.left = nodestr[2].split(',')[0]
-            if 'Node' in nodestr[3]:
-                node.left.right = BinaryTreeNode(nodestr[2].split('(')[1])
-            elif '-' in nodestr[3]:
-                node.left.right = None
-            else:
-                node.left.right = nodestr[3].split(',')[0]
-        elif '-' in nodestr[1]:
-            node.left = None
-        else:
-            node.left = nodestr[1].split(',')[0]
-        if 'Node' in  nodestr[4]:
-            node.right = BinaryTreeNode(nodestr[4].split('(')[1])
-            if 'Node' in nodestr[5]:
-                node.right.left = BinaryTreeNode(nodestr[5].split('(')[1])
-            elif '-' in nodestr[5]:
-                node.right.left = None
-            else:
-                node.right.left = nodestr[5].split(',')[0]
-            if 'Node' in nodestr[6]:
-                node.right.right = BinaryTreeNode(nodestr[6].split('(')[1])
-            elif '-' in nodestr[6]:
-                node.right.right = None
-            else:
-                node.right.right = nodestr[6].split(',')[0]
-        elif '-' in nodestr[4]:
-            node.right = None
-        else:
-            node.right = nodestr[4].split(',')[0]
-    elif '-' in nodestr[0]:
+    node = BinaryTreeNode('dummy')
+    if 'Node' in nodestr[node.get_node_index()]:
+        node.val = nodestr[node.get_node_index()].split('(')[1]
+        node.set_node_index()
+        node.left = deserialize(','.join(nodestr[node.get_node_index():]))
+        node.right = deserialize(','.join(nodestr[node.get_node_index():]))
+    elif '-' in nodestr[node.get_node_index()]:
         node = None
     else:
-        node = nodestr[0].split(',')[0]
-
+        node = nodestr[node.get_node_index()].split(',')[0]
     return node
+
+    # nodestr = nodestr.split(',')
+    # if 'Node' in nodestr[0]:
+    #     node = BinaryTreeNode(nodestr[0].split('(')[1])
+    #     if 'Node' in  nodestr[1]:
+    #         node.left = BinaryTreeNode(nodestr[1].split('(')[1])
+    #         if 'Node' in nodestr[2]:
+    #             node.left.left = BinaryTreeNode(nodestr[2].split('(')[1])
+    #         elif '-' in nodestr[2]:
+    #             node.left.left = None
+    #         else:
+    #             node.left.left = nodestr[2].split(',')[0]
+    #         if 'Node' in nodestr[3]:
+    #             node.left.right = BinaryTreeNode(nodestr[2].split('(')[1])
+    #         elif '-' in nodestr[3]:
+    #             node.left.right = None
+    #         else:
+    #             node.left.right = nodestr[3].split(',')[0]
+    #     elif '-' in nodestr[1]:
+    #         node.left = None
+    #     else:
+    #         node.left = nodestr[1].split(',')[0]
+    #     if 'Node' in  nodestr[4]:
+    #         node.right = BinaryTreeNode(nodestr[4].split('(')[1])
+    #         if 'Node' in nodestr[5]:
+    #             node.right.left = BinaryTreeNode(nodestr[5].split('(')[1])
+    #         elif '-' in nodestr[5]:
+    #             node.right.left = None
+    #         else:
+    #             node.right.left = nodestr[5].split(',')[0]
+    #         if 'Node' in nodestr[6]:
+    #             node.right.right = BinaryTreeNode(nodestr[6].split('(')[1])
+    #         elif '-' in nodestr[6]:
+    #             node.right.right = None
+    #         else:
+    #             node.right.right = nodestr[6].split(',')[0]
+    #     elif '-' in nodestr[4]:
+    #         node.right = None
+    #     else:
+    #         node.right = nodestr[4].split(',')[0]
+    # elif '-' in nodestr[0]:
+    #     node = None
+    # else:
+    #     node = nodestr[0].split(',')[0]
+
+    # return node
 
     # if len(nodestr) == 3:
     #     return BinaryTreeNode(nodestr[0] if nodestr[0] != '-' else None, left=nodestr[1] if nodestr[1] != '-' else None, right=nodestr[2] if nodestr[2] != '-' else None)
@@ -153,3 +174,7 @@ class Problems(object):
         # node = BinaryTreeNode('root', 'left', 'right')
         node = BinaryTreeNode('root', BinaryTreeNode('left', BinaryTreeNode('left.left')), BinaryTreeNode('right'))
         return deserialize(serialize(node)).left.left.val
+
+if __name__ == '__main__':
+    problem = Problems()
+    problem.day_three()
