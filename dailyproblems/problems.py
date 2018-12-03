@@ -197,8 +197,33 @@ class Problems(object):
         missing_positive_value = get_missing_positive_integer(sorted_arr)
         return missing_positive_value
 
+    def day_five(self):
+        """
+        This problem was asked by Jane Street.
+
+        cons(a, b) constructs a pair, and car(pair) and cdr(pair) returns
+        the first and last element of that pair.
+        For example, car(cons(3, 4)) returns 3, and cdr(cons(3, 4)) returns 4.
+
+        Given this implementation of cons:
+
+        def cons(a, b):
+            def pair(f):
+                return f(a, b)
+            return pair
+        Implement car and cdr.
+        def car(f):
+            def wrapper(*args, **kwargs):
+                return f(*args, **kwargs)(lambda *args: arg[0])
+            return wrapper()
+
+        def cdr(f):
+            def wrapper(*args, **kwargs):
+                return f(*args, **kwargs)(lambda *args: arg[1])
+            return wrapper()
+        """
+        pass
 
 if __name__ == '__main__':
     problem = Problems()
-    problem.day_four([3, 4, -1, 1, 1, -1, 5, 6, 2, 9])
-    problem.day_four([1, 2, 0])
+    problem.day_five()
