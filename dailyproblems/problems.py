@@ -121,6 +121,13 @@ def deserialize(nodestr):
     # else:
     #     return BinaryTreeNode(nodestr[0], left=deserialize(nodestr[1:]), right=deserialize(nodestr[2:]))
 
+def get_missing_positive_integer(sorted_arr):
+    if len(sorted_arr) <= 1:
+        return sorted_arr[-1] + 1
+    elif sorted_arr[0] + 1 not in  sorted_arr and sorted_arr[0] + 1 != 0:
+        return sorted_arr[0] + 1
+    return get_missing_positive_integer(sorted_arr[1:])
+
 class Problems(object):
     """
     """
@@ -175,6 +182,23 @@ class Problems(object):
         node = BinaryTreeNode('root', BinaryTreeNode('left', BinaryTreeNode('left.left')), BinaryTreeNode('right'))
         return deserialize(serialize(node)).left.left.val
 
+    def day_four(self, arr):
+        """
+        Given an array of integers, find the first missing positive integer in
+        linear time and constant space. In other words, find the lowest positive
+        integer that does not exist in the array. The array can contain duplicates
+        and negative numbers as well.
+
+        For example, the input [3, 4, -1, 1] should give 2. The input [1, 2, 0] should give 3.
+
+        You can modify the input array in-place.
+        """
+        sorted_arr = list(set(sorted(arr)))
+        missing_positive_value = get_missing_positive_integer(sorted_arr)
+        return missing_positive_value
+
+
 if __name__ == '__main__':
     problem = Problems()
-    problem.day_three()
+    problem.day_four([3, 4, -1, 1, 1, -1, 5, 6, 2, 9])
+    problem.day_four([1, 2, 0])
