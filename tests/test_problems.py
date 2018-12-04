@@ -29,3 +29,9 @@ def test_day_four(obj):
     assert obj.day_four([3, 4, -1, 1, 1, -1, 5, 6, 2, 9]) == 7
     assert obj.day_four([1, 2, 0]) == 3
     assert obj.day_four([1, 2, 3, 4, 5, 4, 7, -2, -1, 1, 2, 3, 4, -1, 1, 1, -1, 5, 6, 2, 9]) == 8
+
+def test_day_five(obj):
+    assert obj.day_five(3, 4, test_car=True) == 3
+    assert obj.day_five(3, 4, test_car=False) == 4
+    assert obj.day_five(1, 4, test_car=True) == 1
+    assert obj.day_five(4, 5, test_car=False) == 5

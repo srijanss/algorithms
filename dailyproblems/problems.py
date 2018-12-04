@@ -128,6 +128,17 @@ def get_missing_positive_integer(sorted_arr):
         return sorted_arr[0] + 1
     return get_missing_positive_integer(sorted_arr[1:])
 
+def cons(a, b):
+    def pair(f):
+        return f(a, b)
+    return pair
+
+def car(f):
+    return f(lambda a, b: a)
+
+def cdr(f):
+    return f(lambda a, b: b)
+
 class Problems(object):
     """
     """
@@ -197,7 +208,7 @@ class Problems(object):
         missing_positive_value = get_missing_positive_integer(sorted_arr)
         return missing_positive_value
 
-    def day_five(self):
+    def day_five(self, arg1, arg2, test_car=True):
         """
         This problem was asked by Jane Street.
 
@@ -221,9 +232,47 @@ class Problems(object):
             def wrapper(*args, **kwargs):
                 return f(*args, **kwargs)(lambda *args: arg[1])
             return wrapper()
+
+        Closures and Lambda func
+        def cons(a, b):
+            def pair(f):
+                return f(a, b)
+            return pair
+
+        def car(f):
+            return f(lambda a, b: a)
+
+        def cdr(f):
+            return f(lambda a, b: b)
+        """
+        if test_car:
+            return car(cons(arg1, arg2))
+        else:
+            return cdr(cons(arg1, arg2))
+
+    def day_six(self):
+        """
+        An XOR linked list is a more memory efficient doubly linked list.
+        Instead of each node holding next and prev fields, it holds a field
+        named both, which is an XOR of the next node and the previous node.
+        Implement an XOR linked list; it has an add(element) which adds the
+        element to the end, and a get(index) which returns the node at index.
+
+        If using a language that has no pointers (such as Python), you can
+        assume you have access to get_pointer and dereference_pointer functions
+        that converts between nodes and memory addresses
         """
         pass
+
+# def make_multiplier_of(n):
+#     def multiplier(f):
+#         return f(n)
+#     return multiplier
 
 if __name__ == '__main__':
     problem = Problems()
     problem.day_five()
+    # times3 = make_multiplier_of(3)
+    # print(times3(lambda x: x * 9))
+    # func = cons(3, 4)
+    # print(func(lambda a, b: a))
